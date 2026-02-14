@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operation: Back to Being Kids</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #FFF5E4 0%, #FFE5E5 50%, #E5F3FF 100%);
+            color: #5D4E6D;
+            overflow-x: hidden;
+        }
+        
+        .floating-doodles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .doodle {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .doodle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+        .doodle:nth-child(2) { left: 80%; top: 10%; animation-delay: 2s; }
+        .doodle:nth-child(3) { left: 70%; top: 60%; animation-delay: 4s; }
+        .doodle:nth-child(4) { left: 20%; top: 70%; animation-delay: 6s; }
+        .doodle:nth-child(5) { left: 50%; top: 30%; animation-delay: 8s; }
+        .doodle:nth-child(6) { left: 15%; top: 50%; animation-delay: 3s; }
+        .doodle:nth-child(7) { left: 85%; top: 80%; animation-delay: 5s; }
+        .doodle:nth-child(8) { left: 40%; top: 90%; animation-delay: 7s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(-10px) rotate(-5deg); }
+            75% { transform: translateY(-30px) rotate(3deg); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 4rem 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+        }
+        
+        h1, h2 {
+            font-family: 'Crimson Pro', serif;
+            color: #FF6B9D;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            text-align: center;
+            text-shadow: 3px 3px 0 rgba(255, 107, 157, 0.2);
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #8B7BA8;
+            margin-bottom: 2rem;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            border: 1px solid #FFE5E5;
+            min-width: 100px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #FF6B9D;
+            display: block;
+            font-family: 'Crimson Pro', serif;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            color: #8B7BA8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #FF6B9D, #FFB6C1);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .movie-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .movie-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #FFE5E5;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .movie-card:hover {
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.15);
+            transform: translateY(-3px);
+        }
+        
+        .movie-card h3 {
+            color: #FF6B9D;
+            margin-bottom: 0.5rem;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+        }
+        
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .game-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #E5F3FF;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.15);
+        }
+        
+        .game-card h3 {
+            color: #4A90E2;
+            margin-bottom: 0.5rem;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.3rem;
+        }
+        
+        .game-card p {
+            color: #5D4E6D;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .activity-list {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .activity-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #E5F3FF;
+            transition: all 0.3s ease;
+        }
+        
+        .activity-item:hover {
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .activity-item h4 {
+            color: #4A90E2;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .activity-item p {
+            color: #5D4E6D;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+        
+        .activity-item ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+            color: #5D4E6D;
+        }
+        
+        .activity-item li {
+            margin-bottom: 0.3rem;
+            line-height: 1.6;
+        }
+        
+        .timer-display {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #FF6B9D;
+            text-align: center;
+            margin: 1rem 0;
+            font-family: 'Crimson Pro', serif;
+        }
+        
+        .questions-container {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .question-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid #FFE5E5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .question-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.15);
+        }
+        
+        .question-card h3 {
+            color: #FF6B9D;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .question-answer {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px dashed #FFE5E5;
+            color: #8B7BA8;
+            line-height: 1.6;
+        }
+        
+        .question-card.active .question-answer {
+            display: block;
+        }
+        
+        .envelope-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        
+        .envelope {
+            width: 200px;
+            height: 150px;
+            background: white;
+            border: 1px solid #FFE5E5;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.1);
+        }
+        
+        .envelope:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.2);
+        }
+        
+        .envelope::before {
+            content: '♡';
+            position: absolute;
+            font-size: 3rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #FF6B9D;
+        }
+        
+        .snack-rating {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .rating-option {
+            text-align: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, #FFF5E4, #FFE5A1);
+            border-radius: 15px;
+            border: 3px solid #FFCC70;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .rating-option .stars {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .games-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .game-item {
+            background: linear-gradient(135deg, #E5F3FF, #B4D4FF);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 3px solid #86B6F6;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .game-item:hover {
+            transform: rotate(-2deg) scale(1.05);
+        }
+        
+        .game-item h3 {
+            color: #4A90E2;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .ending-section {
+            background: white;
+            text-align: center;
+        }
+        
+        .final-question {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #FFE5E5;
+            margin: 2rem 0;
+        }
+        
+        .final-question textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #FFE5E5;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 100px;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .final-question textarea:focus {
+            outline: none;
+            border-color: #FFB6C1;
+            box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.1);
+        }
+        
+        .final-message {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            color: #FF6B9D;
+            margin-top: 2rem;
+            text-shadow: 2px 2px 0 rgba(255, 182, 193, 0.3);
+        }
+        
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFF5E4 0%, #FFE5E5 50%, #E5F3FF 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .password-box {
+            background: white;
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .password-box h2 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #FFE5E5;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: #FFB6C1;
+            box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.1);
+        }
+        
+        .password-error {
+            color: #FF6B9D;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .protected-content {
+            display: none;
+        }
+        
+        .protected-content.unlocked {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .countdown-item { padding: 1rem; min-width: 80px; }
+            .countdown-number { font-size: 2rem; }
+            section { padding: 2rem 1.5rem; }
+            .movie-options { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-box">
+            <h2>Enter Password to Continue</h2>
+            <input type="password" class="password-input" id="passwordInput" placeholder="Password">
+            <button class="btn" onclick="checkPassword()">Unlock</button>
+            <p class="password-error" id="passwordError">Incorrect password. Try again!</p>
+        </div>
+    </div>
+
+    <div class="floating-doodles">
+        <div class="doodle">★</div>
+        <div class="doodle">✏</div>
+        <div class="doodle">☁</div>
+        <div class="doodle">♡</div>
+        <div class="doodle">◠</div>
+        <div class="doodle">✦</div>
+        <div class="doodle">✧</div>
+        <div class="doodle">⊹</div>
+    </div>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Operation: Back to Being Kids</h1>
+            <p class="subtitle">A virtual Valentine's date where we forget adulthood for a few hours.</p>
+            
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="scrollToMovies()">Start Our Date</button>
+        </section>
+
+        <div class="protected-content" id="protectedContent">
+
+        <!-- Movie Options -->
+        <section id="movies">
+            <h2>Movie Options</h2>
+            <p class="subtitle">As kids, we grew up with Disney and Pixar — let's go back.</p>
+            
+            <div class="movie-options">
+                <div class="movie-card">
+                    <h3>WALL-E</h3>
+                    <p>Soft robot love & holding hands in space.</p>
+                </div>
+                <div class="movie-card">
+                    <h3>Up</h3>
+                    <p>Adventure, balloons, and forever type love.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Drawing Games -->
+        <section>
+            <h2>Recess Time</h2>
+            <p class="subtitle">Drawing activities with 60-second timers — reveal at the same time!</p>
+            
+            <div class="game-grid">
+                <div class="game-card">
+                    <h3>Our Future House</h3>
+                    <p>Sketch the home we'd build together — chaotic, cozy, or dream-level unrealistic. No rules. Just imagination.</p>
+                    <button class="btn" style="padding: 0.5rem 1.5rem; font-size: 1rem; margin-top: 1rem;" onclick="startTimer(60, this)">Start Timer</button>
+                </div>
+                <div class="game-card">
+                    <h3>How I See You</h3>
+                    <p>Draw each other the way you truly see them — personality, vibe, energy… not just face.</p>
+                    <button class="btn" style="padding: 0.5rem 1.5rem; font-size: 1rem; margin-top: 1rem;" onclick="startTimer(60, this)">Start Timer</button>
+                </div>
+                <div class="game-card">
+                    <h3>Our Future Dog</h3>
+                    <p>Create the most dramatic, spoiled, over-loved dog we'd absolutely fight over.</p>
+                    <button class="btn" style="padding: 0.5rem 1.5rem; font-size: 1rem; margin-top: 1rem;" onclick="startTimer(60, this)">Start Timer</button>
+                </div>
+                <div class="game-card">
+                    <h3>Our 8-Year-Old Selves</h3>
+                    <p>Imagine what we would've looked like if we met as kids. Same personalities? Same chaos?</p>
+                    <button class="btn" style="padding: 0.5rem 1.5rem; font-size: 1rem; margin-top: 1rem;" onclick="startTimer(60, this)">Start Timer</button>
+                </div>
+            </div>
+            
+            <div class="timer-display" id="timer-display"></div>
+            
+            <h3 style="margin-top: 3rem; margin-bottom: 1.5rem; text-align: center; color: #FF6B9D;">More Drawing Activities</h3>
+            
+            <div class="activity-list">
+                <div class="activity-item">
+                    <h4>60-Second Speed Doodle</h4>
+                    <p>Set a 60-second timer. Prompt ideas:</p>
+                    <ul>
+                        <li>Draw love.</li>
+                        <li>Draw our first date as cartoons.</li>
+                        <li>Draw long distance as a creature.</li>
+                        <li>Draw our relationship as a playground.</li>
+                    </ul>
+                    <p style="margin-top: 0.5rem; font-style: italic;">Reveal at the same time.</p>
+                </div>
+                
+                <div class="activity-item">
+                    <h4>Blind Drawing Challenge</h4>
+                    <p>One person describes something. The other draws it without asking questions.</p>
+                    <p style="margin-top: 0.5rem;">Examples:</p>
+                    <ul>
+                        <li>Describe me as a superhero.</li>
+                        <li>Describe our future wedding cake.</li>
+                        <li>Describe our dream vacation in kid language.</li>
+                    </ul>
+                    <p style="margin-top: 0.5rem; font-style: italic;">Compare results. Chaos guaranteed.</p>
+                </div>
+                
+                <div class="activity-item">
+                    <h4>Emoji-to-Drawing</h4>
+                    <p>Send 3 random emojis. The other person must combine them into one drawing.</p>
+                    <p style="margin-top: 0.5rem;">Example: 🐸 + 🚀 + 🍦</p>
+                    <p style="font-style: italic;">You now have to explain why a frog is in space eating ice cream.</p>
+                </div>
+                
+                <div class="activity-item">
+                    <h4>Spin-the-Prompt Wheel</h4>
+                    <p>Random prompt generator with:</p>
+                    <ul>
+                        <li>Draw your worst fear as cute.</li>
+                        <li>Draw what you think I'm bad at.</li>
+                        <li>Draw our future child's personality.</li>
+                        <li>Draw our first argument but as stick figures.</li>
+                    </ul>
+                    <p style="margin-top: 0.5rem; font-style: italic;">Adds unpredictability.</p>
+                </div>
+                
+                <div class="activity-item">
+                    <h4>Would You Rather (Kid Edition)</h4>
+                    <p>Examples:</p>
+                    <ul>
+                        <li>Would you rather have crayons for fingers or glitter hair?</li>
+                        <li>Would you rather relive childhood or fast-forward to old together?</li>
+                        <li>Would you rather be 8 again but know everything or be 25 forever?</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Childhood Questions -->
+        <section>
+            <h2>When I Was Little...</h2>
+            <p class="subtitle">Share your answers one by one</p>
+            
+            <div class="questions-container">
+                <div class="question-card" onclick="this.classList.toggle('active')">
+                    <h3>When I was 7, I wanted to be...</h3>
+                    <div class="question-answer">
+                        Click to expand and share your answer with each other!
+                    </div>
+                </div>
+                
+                <div class="question-card" onclick="this.classList.toggle('active')">
+                    <h3>My biggest childhood fear was...</h3>
+                    <div class="question-answer">
+                        Time to reveal those silly (or not so silly) fears!
+                    </div>
+                </div>
+                
+                <div class="question-card" onclick="this.classList.toggle('active')">
+                    <h3>My favorite cartoon was...</h3>
+                    <div class="question-answer">
+                        The one you never missed on Saturday mornings!
+                    </div>
+                </div>
+                
+                <div class="question-card" onclick="this.classList.toggle('active')">
+                    <h3>The snack I used to hide was...</h3>
+                    <div class="question-answer">
+                        We all had that secret stash somewhere!
+                    </div>
+                </div>
+                
+                <div class="question-card" onclick="this.classList.toggle('active')">
+                    <h3>What 10-year-old me needed to hear...</h3>
+                    <div class="question-answer">
+                        The words that would have changed everything.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Time Capsule -->
+        <section>
+            <h2>Nostalgia Time Capsule</h2>
+            <p class="subtitle">Letters to Our Younger Selves</p>
+            
+            <div class="envelope-container">
+                <div class="envelope" onclick="alert('Write your answers privately, then read them out loud to each other!')"></div>
+            </div>
+            
+            <div class="questions-container">
+                <div class="question-card" onclick="this.classList.toggle('active')">
+                    <h3>What would 10-year-old me think about my life right now?</h3>
+                    <div class="question-answer">
+                        Would they be proud? Surprised? Confused about the adulting?
+                    </div>
+                </div>
+                
+                <div class="question-card" onclick="this.classList.toggle('active')">
+                    <h3>What would our younger selves think about us dating long distance?</h3>
+                    <div class="question-answer">
+                        Back when passing notes in class was "long distance communication"!
+                    </div>
+                </div>
+                
+                <div class="question-card" onclick="this.classList.toggle('active')">
+                    <h3>What promise do I want to make to my younger self?</h3>
+                    <div class="question-answer">
+                        The commitment you wish someone had made back then.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ending -->
+        <section class="ending-section">
+            <h2>Before We Grow Up Again...</h2>
+            
+            <div class="final-question">
+                <h3 style="color: #FF6B9D; font-family: 'Crimson Pro', serif; font-size: 1.8rem; margin-bottom: 1rem;">
+                    If we could relive one childhood day together, what would it look like?
+                </h3>
+                <textarea placeholder="Type your answer here... or save it for your video call"></textarea>
+            </div>
+        </section>
+        
+        </div><!-- End protected content -->
+    </div>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            // Set your date target here - adjust as needed
+            const targetDate = new Date();
+            targetDate.setHours(12, 0, 0, 0);
+            
+            // If time has passed today, set for tomorrow
+            if (new Date() > targetDate) {
+                targetDate.setDate(targetDate.getDate() + 1);
+            }
+            
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<h2 style="color: #FF6B9D; font-family: \'Crimson Pro\', serif;">It\'s Date Time!</h2>';
+            }
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Scroll to Movies
+        function scrollToMovies() {
+            document.getElementById('movies').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Password Protection
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+            const overlay = document.getElementById('passwordOverlay');
+            const protectedContent = document.getElementById('protectedContent');
+            
+            // Set your password here
+            const correctPassword = 'backtokids'; // Change this to your desired password
+            
+            if (input.value === correctPassword) {
+                overlay.style.display = 'none';
+                protectedContent.classList.add('unlocked');
+            } else {
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+            }
+        }
+        
+        // Allow Enter key to submit password
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('passwordInput');
+            if (input) {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+                input.focus();
+            }
+        });
+        
+        // Timer
+        let timerInterval;
+        
+        function startTimer(seconds, button) {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            const display = document.getElementById('timer-display');
+            let timeLeft = seconds;
+            button.textContent = 'Running...';
+            button.disabled = true;
+            
+            display.textContent = `${timeLeft}s`;
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                display.textContent = `${timeLeft}s`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    display.textContent = 'Time\'s up! Reveal time!';
+                    button.textContent = 'Start Timer';
+                    button.disabled = false;
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
